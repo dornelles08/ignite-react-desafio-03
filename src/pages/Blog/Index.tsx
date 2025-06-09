@@ -1,46 +1,51 @@
 import { ArrowSquareUpRight, Buildings, GithubLogo, Users } from "phosphor-react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { PostCard } from "../../components/PostCard";
+import { GithubContext } from "../../contexts/GithubContext";
 import {
   BlogContainer,
   BlogList,
+  PostsGrid,
   Profile,
   ProfileInfo,
   ProfileInfoContainer,
   ProfileName,
   Search,
+  SearchInput,
 } from "./styles";
 
 export function Blog() {
+  const { user, organization, issues } = useContext(GithubContext);
+
   return (
     <BlogContainer>
       <Profile>
-        <img src="https://github.com/dornelles08.png" alt="" />
+        <img src={user.avatar_url} alt="" />
         <ProfileInfoContainer>
           <ProfileName>
-            <span>Felipe Dornelles</span>
-            <a href="https://github.com/dornelles08" target="_blank">
+            <span>{user.name}</span>
+            <a href={user.html_url} target="_blank">
               GITHUB
               <ArrowSquareUpRight />
             </a>
           </ProfileName>
-          <p>
-            Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu viverra massa quam
-            dignissim aenean malesuada suscipit. Nunc, volutpat pulvinar vel mass.
-          </p>
+          <p>{user.bio}</p>
 
           <ProfileInfo>
             <div>
               <GithubLogo size={18} />
-              <span>dornelles08</span>
+              <span>{user.login}</span>
             </div>
 
             <div>
               <Buildings size={18} />
-              <span>Semantix</span>
+              <span>{organization}</span>
             </div>
 
             <div>
               <Users size={18} />
-              <span>32 seguidores</span>
+              <span>{user.followers} seguidores</span>
             </div>
           </ProfileInfo>
         </ProfileInfoContainer>
@@ -50,10 +55,21 @@ export function Blog() {
         <Search>
           <div>
             <h2>Publicações</h2>
-            <span>6 publicações</span>
+            <span>{issues.length} publicações</span>
           </div>
-          <input type="text" placeholder="Buscar conteúdo" />
+          <SearchInput type="text" placeholder="Buscar conteúdo" />
         </Search>
+
+        <PostsGrid>
+          {issues.length === 0 && <p>Nenhuma publicação encontrada.</p>}
+          {issues.map((issue) => {
+            return (
+              <Link key={issue.number} to={`/post/${issue.number}`}>
+                <PostCard title={issue.title} createdAt={issue.created_at} body={issue.body} />
+              </Link>
+            );
+          })}
+        </PostsGrid>
       </BlogList>
     </BlogContainer>
   );

@@ -7,6 +7,8 @@ export const BlogContainer = styled.div`
   flex-direction: column;
 
   gap: 3rem;
+
+  margin-bottom: 3rem;
 `;
 
 export const Profile = styled.div`
@@ -18,6 +20,9 @@ export const Profile = styled.div`
   padding: 2rem;
   gap: 2rem;
   margin-top: -5rem;
+
+  width: 100%;
+  max-width: 60rem;
 
   img {
     width: 9.25rem;
@@ -89,18 +94,61 @@ export const ProfileInfo = styled.div`
 
 export const BlogList = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
   width: 100%;
+  max-width: 60rem;
+
+  gap: 3rem;
 `;
 
 export const Search = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
   width: 100%;
+  gap: 0.5rem;
 
   div {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+
+    h2 {
+      color: ${({ theme }) => theme.baseSubtitle};
+      font-size: 1.125rem;
+      font-weight: 700;
+      line-height: 160%;
+    }
+    span {
+      color: ${({ theme }) => theme.baseSpan};
+      font-size: 0.875rem;
+      font-weight: 700;
+      line-height: 160%;
+    }
+  }
+`;
+
+export const SearchInput = styled.input`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid ${({ theme }) => theme.baseBorder};
+  background: ${({ theme }) => theme.baseInput};
+  color: ${({ theme }) => theme.baseText};
+`;
+
+export const PostsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  width: 100%;
+
+  a {
+    text-decoration: none;
   }
 `;
