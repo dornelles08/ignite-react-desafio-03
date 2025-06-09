@@ -6,12 +6,13 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: center;
   position: relative;
+  z-index: -1;
 
-  img {    
+  img {
     top: 0;
     left: 0;
     width: 100%;
-    height: 18.5rem;    
+    height: 18.5rem;
     object-fit: cover;
   }
 `;
