@@ -1,5 +1,5 @@
 import { ArrowSquareUpRight, Buildings, GithubLogo, Users } from "phosphor-react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { PostCard } from "../../components/PostCard";
 import { GithubContext } from "../../contexts/GithubContext";
@@ -16,7 +16,12 @@ import {
 } from "./styles";
 
 export function Blog() {
-  const { user, organization, issues } = useContext(GithubContext);
+  const { user, organization, issues, fetchIssues } = useContext(GithubContext);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    fetchIssues(search);
+  }, [search]);
 
   return (
     <BlogContainer>
@@ -57,7 +62,12 @@ export function Blog() {
             <h2>Publicações</h2>
             <span>{issues.length} publicações</span>
           </div>
-          <SearchInput type="text" placeholder="Buscar conteúdo" />
+          <SearchInput
+            type="text"
+            placeholder="Buscar conteúdo"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </Search>
 
         <PostsGrid>

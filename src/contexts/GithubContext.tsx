@@ -93,6 +93,7 @@ export interface GitHubUserDetails {
 
 interface GithubContextType {
   fetchUserDetails: () => void;
+  fetchIssues: (query?: string) => void;
   user: GitHubUserDetails;
   organization: string | null;
   issues: GitHubIssue[];
@@ -123,10 +124,10 @@ export function GithubProvider({ children }: GithubProviderProps) {
     setOrganization(response.data[0] && response.data[0].login);
   }
 
-  async function fetchIssues() {
+  async function fetchIssues(query?: string) {
     const response = await api.get(`search/issues`, {
       params: {
-        q: `repo:${githubUser}/reactjs-github-blog-challenge`,
+        q: `${query} repo:${githubUser}/reactjs-github-blog-challenge`,
       },
     });
     console.log(response.data);
@@ -140,7 +141,7 @@ export function GithubProvider({ children }: GithubProviderProps) {
   }, []);
 
   return (
-    <GithubContext.Provider value={{ fetchUserDetails, user, organization, issues }}>
+    <GithubContext.Provider value={{ fetchUserDetails, user, organization, issues, fetchIssues }}>
       {children}
     </GithubContext.Provider>
   );
